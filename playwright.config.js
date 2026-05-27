@@ -14,9 +14,10 @@ import { defineConfig, devices } from '@playwright/test';
  */
 export default defineConfig({
   testDir: './tests',
-  timeout: 40 * 1000,
+  // Maximum time one test can run for.
+  timeout: 30 * 1000,
   expect: {
-    timeout: 40 * 1000
+    timeout: 5000
   },
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
