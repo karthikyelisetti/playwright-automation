@@ -55,6 +55,7 @@ test.only('UI Controls', async ({page}) => {
     const okayBtn = page.locator("#okayBtn");
     const checkbox = page.locator("#terms");
     const signInBtn = page.locator("#signInBtn");
+    const documentLink = page.locator("[href*='documents-request']");
 
     // filling the login form and clicking the login button
     await username.fill("rahulshettyacademy");
@@ -73,4 +74,6 @@ test.only('UI Controls', async ({page}) => {
 
     await checkbox.uncheck();
     expect(await checkbox.isChecked()).toBeFalsy();
+
+    await expect(documentLink).toHaveAttribute("class","blinkingText");
 });
