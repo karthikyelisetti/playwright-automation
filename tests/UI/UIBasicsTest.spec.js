@@ -9,6 +9,7 @@ test.only('Browser context UI Demo', async ({browser}) => {
     const password = page.locator("[type='password']");
     const signInBtn = page.locator("#signInBtn");
     const alertMsg = page.locator("[style*='block']");
+    const cardTitles = page.locator(".card-body a");
 
     await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
     console.log(await page.title());
@@ -28,9 +29,12 @@ test.only('Browser context UI Demo', async ({browser}) => {
     await signInBtn.click();
 
     // extract text from the page and cards title and print it
-    console.log(await page.locator(".card-body a").first().textContent());
-    console.log(await page.locator(".card-body a").nth(1).textContent());
+    // In case the below textContent() is commented, playwright will not wait for the page to load and will exit.
+    // console.log(await cardTitles.first().textContent());
+    // console.log(await cardTitles.nth(1).textContent());
     console.log(await page.title());
+
+    console.log(await cardTitles.allTextContents());
 
 });
 
