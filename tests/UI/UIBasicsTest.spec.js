@@ -44,3 +44,33 @@ test('Page UI Demo', async ({page}) => {
 
     await expect(page).toHaveTitle("Google");
 });
+
+test.only('UI Controls', async ({page}) => {
+    await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
+
+    const username = page.locator("#username");
+    const password = page.locator("[type='password']");
+    const dropdown = page.locator("select.form-control");
+    const radiobuttons = page.locator(".radiotextsty");
+    const okayBtn = page.locator("#okayBtn");
+    const checkbox = page.locator("#terms");
+    const signInBtn = page.locator("#signInBtn");
+
+    // filling the login form and clicking the login button
+    await username.fill("rahulshettyacademy");
+    await password.fill("Learning@830$3mK2");
+    
+    await radiobuttons.last().click();
+    await okayBtn.click();
+
+    await dropdown.selectOption("consult");
+    await checkbox.click();
+
+    // assertion to check if the value is selected correctly
+    console.log(await radiobuttons.last().isChecked());
+    await expect(radiobuttons.last()).toBeChecked();
+    await expect(checkbox).toBeChecked();
+
+    await checkbox.uncheck();
+    expect(await checkbox.isChecked()).toBeFalsy();
+});
