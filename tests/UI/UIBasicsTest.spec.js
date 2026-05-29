@@ -105,6 +105,7 @@ test.only('Child window handler', async ({browser}) => {
     // where we can perform actions on the page and see the state of the elements.
     // We can also use this to debug our tests.
     
-    console.log(await page.locator("#username").textContent());
+    // assertion to check if the value is filled correctly when passed from the child window to the parent window.
+    console.log(await page.locator("#username").inputValue());
 
 });
