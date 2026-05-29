@@ -45,7 +45,7 @@ test('Page UI Demo', async ({page}) => {
     await expect(page).toHaveTitle("Google");
 });
 
-test.only('UI Controls', async ({page}) => {
+test('UI Controls', async ({page}) => {
     await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
 
     const username = page.locator("#username");
@@ -76,4 +76,35 @@ test.only('UI Controls', async ({page}) => {
     expect(await checkbox.isChecked()).toBeFalsy();
 
     await expect(documentLink).toHaveAttribute("class","blinkingText");
+});
+
+test.only('Child window handler', async ({browser}) => {
+    const context = await browser.newContext();
+    const page = await context.newPage();
+
+    await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
+    const documentLink = page.locator("[href*='documents-request']");
+
+    const [newPage] = await Promise.all([
+        // wait for the new page to open and get the reference to it
+        // This is necessary because when we click the link, it will open a new tab and we need to switch to that tab to perform actions on it.
+        // If we don't wait for the new page to open, we might try to perform actions on the old page which will lead to errors.
+        context.waitForEvent('page'), // Listen for any new page pending,rejected,fullfilled
+        documentLink.click(), // this will open a new page (tab)
+    ]);
+
+    const redText = await newPage.locator(".red").textContent();
+    console.log(redText);
+
+    const arrayText = redText.split("@");
+    const domain = arrayText[1].split(" ")[0];
+    console.log(domain);
+
+    await page.locator("#username").fill(domain);
+    await page.pause(); // This will pause the execution and open the Playwright Inspector 
+    // where we can perform actions on the page and see the state of the elements.
+    // We can also use this to debug our tests.
+    
+    console.log(await page.locator("#username").textContent());
+
 });
