@@ -1,6 +1,6 @@
 const {test, expect} = require('@playwright/test');
 
-test('Test for Assignment 1', async ({page}) => {
+test('Website Client App', async ({page}) => {
     await page.goto("https://rahulshettyacademy.com/client");
     console.log(await page.title());
 
