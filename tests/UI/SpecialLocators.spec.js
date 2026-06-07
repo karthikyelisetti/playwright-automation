@@ -1,4 +1,4 @@
-const {test} = require('@playwright/test');
+const {test,expect} = require('@playwright/test');
 
 
 test.only("Playwright Special Locators", async ({page}) => {
@@ -13,7 +13,7 @@ test.only("Playwright Special Locators", async ({page}) => {
 
     await page.getByRole("button", {name: "Submit"}).click();
 
-    await page.getByText("Success! The Form has been submitted successfully!.").isVisible();
+    expect(await page.getByText("Success! The Form has been submitted successfully!.")).toBeVisible();
     await page.getByRole("Link", {name: "Shop"}).click();
     await page.locator("app-card").filter({hasText: "Nokia Edge"}).getByRole("button").click();
 
